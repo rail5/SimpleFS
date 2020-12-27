@@ -24,3 +24,9 @@ Check for the line:
 ```
 file_uploads = On
 ```
+
+# Screenshots
+![Sign in](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-login.png)
+![Upload](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-upload.png)
+![Download](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-download.png)
+![Manage](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-manage.png)
