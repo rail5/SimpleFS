@@ -11,6 +11,8 @@ Simple, Self-Hosted, PHP File Sharing
 - Visit **setup.php** in your web browser to create a user or two to upload files
 - Delete **setup.php** after setting up, as leaving it there is a security risk
 
+- Shareable links are obtained from **manage.php** in the format of **download.php?id=XXXXX**
+
 *That's it*
 
 ### User Recovery / Forgot Password
