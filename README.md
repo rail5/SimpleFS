@@ -10,6 +10,7 @@ Simple, Self-Hosted, PHP File Sharing
 - Place files on your web server *(doesn't have to be in the root directory)*
 - Visit **setup.php** in your web browser to create a user or two to upload files
 - Delete **setup.php** after setting up, as leaving it there is a security risk
+
 *That's it*
 
 ### User Recovery / Forgot Password
