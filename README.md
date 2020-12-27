@@ -31,6 +31,7 @@ file_uploads = On
 ```
 
 # Screenshots
+![Main](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-main.png)
 ![Sign in](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-login.png)
 ![Upload](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-upload.png)
 ![Download](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-download.png)
