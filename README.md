@@ -6,14 +6,17 @@ Simple, Self-Hosted, PHP File Sharing
 - Dual- or single-user set up *(users with permission to upload)*
 - Flatfile
 
-### Usage
+### Installation
 - Place files on your web server *(doesn't have to be in the root directory)*
 - Visit **setup.php** in your web browser to create a user or two to upload files
 - Delete **setup.php** after setting up, as leaving it there is a security risk
 
-- Shareable links are obtained from **manage.php** in the format of **download.php?id=XXXXX**
-
 *That's it*
+
+### Usage
+
+- After signing in, upload files via **upload.php**
+- After uploading, shareable links can be obtained from **manage.php** in the format **download.php?id=XXXXX**
 
 ### User Recovery / Forgot Password
 - If you forget your password, delete the *contents* of **config.global.php** and download & re-run **setup.php**
