@@ -19,7 +19,7 @@ Simple, Self-Hosted, PHP File Sharing
 - After uploading, shareable links can be obtained from **manage.php** in the format **download.php?id=XXXXX**
 
 ### User Recovery / Forgot Password
-- If you forget your password, delete the *contents* of **config.global.php** and download & re-run **setup.php**
+- If you forget your password, download & re-run **setup.php**
 
 # Requirements
 * [PHP 7.2+](https://www.php.net)
