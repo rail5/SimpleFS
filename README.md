@@ -23,6 +23,7 @@ Simple, Self-Hosted, PHP File Sharing
 
 ### Security
 - For Nginx Users
+
 It's recommended that you alter your server configuration to block direct access to the sqlite database file (created by **setup.php** as **filedb.sqlite**), and to block direct access to the *files directory*, as such for example:
 ```
     location = /SimpleFS/Installation/Folder/filedb.sqlite {
@@ -35,6 +36,7 @@ It's recommended that you alter your server configuration to block direct access
     }
 ```
 - For Apache Users
+
 This repo includes .htaccess files preventing direct access to the sqlite database file and to the filest directory. Please ensure that your Apache installation is configured to allow .htaccess overrides, as in for instance, in your **apache2.conf**:
 ```
 <Directory /var/www/>
