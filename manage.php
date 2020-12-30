@@ -1,129 +1,56 @@
 <?php
 
-
 require('config.global.php');
 require('layout.php');
+require('functions.global.php');
 
-require('filedb.php');
-
-if ($_SESSION['valid'] != true) {
+if ($_SESSION['simplefsvalid'] != true) {
     header('location: login.php');
     die();
 }
 
-$nFiles = count($fileListId);
+$currentUser = $_SESSION['simplefsuser'];
 
-if ($nFiles != count($fileListLocation) || $nFiles != count($fileListOwner)) {
-    die('<div align="center"><h1>Error: Array lengths in file database don\'t match</h1><br><h3>Something\'s gone horribly wrong</h3></div>');
-}
+/* Obtain list of current user's files */
+
+$myFilesId = contactDB("SELECT * FROM files WHERE fileowner='$currentUser';", 0);
+$myFilesName = contactDB("SELECT * FROM files where fileowner='$currentUser';", 1);
+
+$nFiles = count($myFilesId);
 
 $i = 0;
-
-$myFiles = array(); // This array will be populated with a list of references to the files belonging to our currently signed-in user
-// e.g., if files 1, 2, 4, 6, and 8 belong to user #2, but user #1 is signed in,
-// This array will be populated with references to files 3, 5, and 7
-// And the inverse if user #2 is signed in
-
-while ($i < $nFiles) {
-    if ($fileListOwner[$i] == $_SESSION['user']) {
-        array_push($myFiles, $i);
-    }
-    $i = $i + 1;
-}
-
-
-$nMyFiles = count($myFiles); // Preparing to iterate through the newly populated array
-
-$ni = 0;
 
 $outputContents = "";
 
 if ($_POST['msubmitted'] == true) {
-    $nni = 0;
     
-    while ($nni < $nMyFiles) {
-        if ($_POST["file$nni"] == "marked") {
-            unlink($fileListLocation[$myFiles[$nni]]); // Delete the selected file
+    while ($i < $nFiles) {
+        if ($_POST["file$myFilesId[$i]"] == "marked") {
+            unlink($myFilesName[$i]); // Delete selected file
             
-            unset($fileListId[$myFiles[$nni]]); // Remove element from array
-            unset($fileListLocation[$myFiles[$nni]]);
-            unset($fileListOwner[$myFiles[$nni]]);
-            
+            $dbChange = contactDB("DELETE FROM files WHERE fileid='$myFilesId[$i]';", 0); // Update database
         }
-        $nni = $nni + 1;
+        $i = $i + 1;
     }
-    
-    $newFileDb = fopen('filedb.php', 'w');
-
-    $newContents = "<?php".PHP_EOL;
-
-    $newContents = $newContents.'$fileListId = array(';
-
-    foreach ($fileListId as &$nvalue) {
-        $newContents = $newContents."'$nvalue', ";
-    }
-
-    unset($nvalue);
-
-    $newContents = substr($newContents, 0, -2);
-
-    $newContents = $newContents.");".PHP_EOL;
-
-    $newContents = $newContents.'$fileListLocation = array(';
-
-    foreach ($fileListLocation as &$nvalue) {
-        $newContents = $newContents."'$nvalue', ";
-    }
-
-    unset($nvalue);
-
-    $newContents = substr($newContents, 0, -2);
-
-    $newContents = $newContents.");".PHP_EOL;
-
-    $newContents = $newContents.'$fileListOwner = array(';
-
-    foreach ($fileListOwner as &$nvalue) {
-        $newContents = $newContents."'$nvalue', ";
-    }
-
-    unset($nvalue);
-
-    $newContents = substr($newContents, 0, -2);
-
-    $newContents = $newContents.");".PHP_EOL."?>";
-    
-    if ($newContents == '<?php
-$fileListId = arra);
-$fileListLocation = arra);
-$fileListOwner = arra);
-?>') {
-    $newContents = '<?php
-$fileListId = array();
-$fileListLocation = array();
-$fileListOwner = array();
-?>';
-}
-// I realize that this (directly above) is like duct taping a hole in a ship
-// But it's literally the only possible case when substr($newContents, 0, -2) ever presents a problem
-// So I don't really think it makes any difference whether I 'patch this hole' or restructure it from bottom-up
-// I mean, it may make a difference with future developments/changes/updates/etc but I don't plan to maintain this lol
-// Write and publish and forget, that's my motto
-
-    fwrite($newFileDb, $newContents);
-
-    fclose($newFileDb);
-    
+    $i = 0; // Reset iteration for next use
     $noticeText = "<div align='center'><h1>Files successfully deleted</h1></div><br>".PHP_EOL;
 }
 
-if ($nMyFiles == 0) {
+unset($myFilesId);
+unset($myFilesName); // Re-loading list after file deletion
+unset($nFiles);
+
+$myFilesId = contactDB("SELECT * FROM files WHERE fileowner='$currentUser';", 0);
+$myFilesName = contactDB("SELECT * FROM files where fileowner='$currentUser';", 1);
+$nFiles = count($myFilesId);
+
+if ($nFiles == 0) {
     $outputContents = "You haven't uploaded any files yet";
 } else {
-    while ($ni < $nMyFiles) {
-        $fileName = str_replace("files/", "", $fileListLocation[$myFiles[$ni]]);
-        $outputContents = $outputContents.'<div class="field"> <input type="checkbox" name="file'.$ni.'" id="file'.$ni.'" value="marked"><label for="file'.$ni.'"><a href="download.php?id='.$fileListId[$myFiles[$ni]].'">'.$fileName.'</a></label></div>'.PHP_EOL;
-        $ni = $ni + 1;
+    while ($i < $nFiles) {
+        $fileName = str_replace("files/", "", $myFilesName[$i]);
+        $outputContents = $outputContents.'<div class="field"> <input type="checkbox" name="file'.$myFilesId[$i].'" id="file'.$myFilesId[$i].'" value="marked"><label for="file'.$myFilesId[$i].'"><a href="download.php?id='.$myFilesId[$i].'">'.$fileName.'</a></label></div>'.PHP_EOL;
+        $i = $i + 1;
     }
 }
 
