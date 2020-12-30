@@ -2,14 +2,15 @@
 
 
 require('config.global.php');
+require('functions.global.php');
 require('layout.php');
 
-require('filedb.php');
-
-if ($_SESSION['valid'] != true) {
+if ($_SESSION['simplefsvalid'] != true) {
     header('location: login.php');
     die();
 }
+
+$currentUser = $_SESSION['simplefsuser'];
 
 echo deliverTop("SimpleFS - Upload");
 
@@ -53,11 +54,14 @@ if (strpos($target_file, '"') !== false) {
     $uploadOk = 0;
 }
 
+/* Getting a list of all file IDs */
+
+$fileListId = contactDB("SELECT * FROM files;", 0);
+
 if ($uploadOk == 0) {
   echo "<div align='center'><h1>Error: file was not uploaded</h1></div>";
 } else {
   if (move_uploaded_file($_FILES["upfile"]["tmp_name"], $target_file)) {
-    echo "<div align='center'><h1>The file ". htmlspecialchars( basename( $_FILES["upfile"]["name"])). " has been uploaded.</h1></div>";
     
     $newFileId = rand(10000, 99999);
     while (in_array($newFileId, $fileListId)) {
@@ -65,53 +69,16 @@ if ($uploadOk == 0) {
     }
 
     
-    array_push($fileListId, $newFileId);
-    array_push($fileListLocation, $target_file);
-    array_push($fileListOwner, $_SESSION['user']);
+    /* Write entry to DB */
     
-    $newFileDb = fopen('filedb.php', 'w');
+    $publish = contactDB("INSERT INTO files (fileid, filepath, fileowner)
+    VALUES ($newFileId, '$target_file', '$currentUser');", 0);
     
-    $newContents = "<?php".PHP_EOL;
+    /* Tell the user all is well */
     
-    $newContents = $newContents.'$fileListId = array(';
+    echo "<div align='center'><h1>The file ". htmlspecialchars( basename( $_FILES["upfile"]["name"])). " has been uploaded.</h1></div>";
+
     
-    foreach ($fileListId as &$nvalue) {
-        $newContents = $newContents."'$nvalue', ";
-    }
-    
-    unset($nvalue);
-    
-    $newContents = substr($newContents, 0, -2);
-    
-    $newContents = $newContents.");".PHP_EOL;
-    
-    $newContents = $newContents.'$fileListLocation = array(';
-    
-    foreach ($fileListLocation as &$nvalue) {
-        $newContents = $newContents."'$nvalue', ";
-    }
-    
-    unset($nvalue);
-    
-    $newContents = substr($newContents, 0, -2);
-    
-    $newContents = $newContents.");".PHP_EOL;
-    
-    $newContents = $newContents.'$fileListOwner = array(';
-    
-    foreach ($fileListOwner as &$nvalue) {
-        $newContents = $newContents."'$nvalue', ";
-    }
-    
-    unset($nvalue);
-    
-    $newContents = substr($newContents, 0, -2);
-    
-    $newContents = $newContents.");".PHP_EOL."?>";
-    
-    fwrite($newFileDb, $newContents);
-    
-    fclose($newFileDb);
     
   } else {
     echo "<div align='center'><h1>Error uploading file</h1></div>";
