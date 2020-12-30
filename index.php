@@ -1,7 +1,6 @@
 <?php
 
-require('config.global.php');
-require('./layout.php');
+require('layout.php');
 
 echo deliverTop("SimpleFS - Home");
 
