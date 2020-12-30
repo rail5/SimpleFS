@@ -41,6 +41,8 @@ function seconduser(checkE) {
         
 <?php
 
+require('functions.global.php');
+
 if ($_POST['formsubmitted'] == "true") {
     if (strlen($_POST['username']) < 3 || strlen($_POST['password']) < 3) {
         die('Error: Use a username/password of at least 3 characters');
@@ -73,7 +75,18 @@ if ($_POST['formsubmitted'] == "true") {
     }
     fwrite($myfile, "?>".PHP_EOL);
     
-    echo '<br>Created. I mean, check config.global.php to make sure, but then delete this file ASAP.';
+    echo '<br>User(s) created. I mean, check config.global.php to make sure, but then delete this file ASAP.';
+    
+    if (!file_exists("./filedb.sqlite")) {
+        touch("./filedb.sqlite");
+        $initializeDB = contactDB("CREATE TABLE files (
+            fileid int NOT NULL PRIMARY KEY,
+            filepath varchar(255) NOT NULL,
+            fileowner varchar(255) NOT NULL
+            );", 0);
+                
+        echo '<br>Initialized file database';
+    }
     
 }
 
