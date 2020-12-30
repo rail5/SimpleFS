@@ -1,0 +1,3 @@
+<Files "filedb.sqlite">
+  Require all denied
+</Files>
