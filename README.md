@@ -46,7 +46,7 @@ This repo includes .htaccess files preventing direct access to the sqlite databa
 </Directory>
 ```
 
-These security measures *aren't absolutely essential*, as regardless, nobody can upload files without being signed in. However, the public-facing download links being in the form of **download.php?id=XXXXX** is considered to be a *security feature* as it prevents **unintended recipients** from downloading files not meant for them. In this same vein, it's a good idea to disallow indiscriminate access to the FileDB and files directory.
+These security measures *aren't absolutely essential*, as regardless, nobody can upload files without being signed in. However, the public-facing download links being in the form of **download.php?id=XXXXX** is considered to be a *security feature* as it helps to prevent **unintended recipients** from discovering and downloading files not meant for them. In this same vein, it's a good idea to disallow indiscriminate access to the FileDB and files directory.
 
 # Requirements
 * [PHP 7.2+](https://www.php.net)
