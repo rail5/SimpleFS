@@ -6,30 +6,30 @@ require('layout.php');
 if ($_POST['submitted'] == true) {
     if ($_POST['username'] == $adminuser) {
         if (password_verify($_POST['password'], $adminpass)) {
-            $_SESSION['valid'] = true;
-            $_SESSION['user'] = "admin";
+            $_SESSION['simplefsvalid'] = true;
+            $_SESSION['simplefsuser'] = "admin";
             // signed in, redirect
             header('location: manage.php');
         } else {
-            $_SESSION['valid'] = false;
-            $_SESSION['user'] = NULL;
+            $_SESSION['simplefsvalid'] = false;
+            $_SESSION['simplefsuser'] = NULL;
             die('Invalid username or password');
 
         }
     } else if ($_POST['username'] == $secuser) {
         if (password_verify($_POST['password'], $secpass)) {
-            $_SESSION['valid'] = true;
-            $_SESSION['user'] = "guest";
+            $_SESSION['simplefsvalid'] = true;
+            $_SESSION['simplefsuser'] = "guest";
             // signed in, redirect
             header('location: manage.php');
         } else {
-            $_SESSION['valid'] = false;
-            $_SESSION['user'] = NULL;
+            $_SESSION['simplefsvalid'] = false;
+            $_SESSION['simplefsuser'] = NULL;
             die('Invalid username or password');
         }
     } else {
-        $_SESSION['valid'] = false;
-        $_SESSION['user'] = NULL;
+        $_SESSION['simplefsvalid'] = false;
+        $_SESSION['simplefsuser'] = NULL;
         die('Invalid username or password');
     }
 }
