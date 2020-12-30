@@ -4,11 +4,11 @@ Simple, Self-Hosted, PHP File Sharing
 # Features
 - Portable
 - Dual- or single-user set up *(users with permission to upload)*
-- Flatfile
+- SQLite
 
 ### Installation
 - Place files on your web server *(doesn't have to be in the root directory)*
-- Visit **setup.php** in your web browser to create a user or two to upload files
+- Visit **setup.php** in your web browser to create a user or two to upload files (this script will also create & initialize the SQLite database)
 - Delete **setup.php** after setting up, as leaving it there is a security risk
 
 *That's it*
@@ -23,6 +23,7 @@ Simple, Self-Hosted, PHP File Sharing
 
 # Requirements
 * [PHP 7.2+](https://www.php.net)
+* [SQLite Module for PHP](https://www.php.net/manual/en/sqlite3.installation.php)
 
 - Please ensure that your **php.ini** *permits uploads.*
 Check for the line:
