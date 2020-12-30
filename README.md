@@ -21,6 +21,31 @@ Simple, Self-Hosted, PHP File Sharing
 ### User Recovery / Forgot Password
 - If you forget your password, download & re-run **setup.php**
 
+### Security
+- For Nginx Users
+It's recommended that you alter your server configuration to block direct access to the sqlite database file (created by **setup.php** as **filedb.sqlite**), and to block direct access to the *files directory*, as such for example:
+```
+    location = /SimpleFS/Installation/Folder/filedb.sqlite {
+        deny all;
+        return 404;
+    }
+    location = /SimpleFS/Installation/Folder/files/ {
+    deny all;
+    return 404;
+    }
+```
+- For Apache Users
+This repo includes .htaccess files preventing direct access to the sqlite database file and to the filest directory. Please ensure that your Apache installation is configured to allow .htaccess overrides, as in for instance, in your **apache2.conf**:
+```
+<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+</Directory>
+```
+
+These security measures *aren't absolutely essential*, as regardless, nobody can upload files without being signed in. However, the public-facing download links being in the form of **download.php?id=XXXXX** is considered to be a *security feature* as it prevents **unintended recipients** from downloading files not meant for them. In this same vein, it's a good idea to disallow indiscriminate access to the FileDB and files directory.
+
 # Requirements
 * [PHP 7.2+](https://www.php.net)
 * [SQLite Module for PHP](https://www.php.net/manual/en/sqlite3.installation.php)
