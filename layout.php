@@ -1,6 +1,6 @@
 <?php
 
-/* General Global Include Functions Here */
+/* Start the session for each page this is included on */
 
 session_start();
 
