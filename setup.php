@@ -77,16 +77,19 @@ if ($_POST['formsubmitted'] == "true") {
     
     echo '<br>User(s) created. I mean, check config.global.php to make sure, but then delete this file ASAP.';
     
-    if (!file_exists("./filedb.sqlite")) {
-        touch("./filedb.sqlite");
-        $initializeDB = contactDB("CREATE TABLE files (
-            fileid int NOT NULL PRIMARY KEY,
-            filepath varchar(255) NOT NULL,
-            fileowner varchar(255) NOT NULL
-            );", 0);
-                
-        echo '<br>Initialized file database';
+    if (file_exists("./filedb.sqlite")) {
+        unlink("./filedb.sqlite");
     }
+
+
+    touch("./filedb.sqlite");
+    $initializeDB = contactDB("CREATE TABLE files (
+        fileid int NOT NULL PRIMARY KEY,
+        filepath varchar(255) NOT NULL,
+        fileowner varchar(255) NOT NULL
+        );", 0);
+                
+    echo '<br>Initialized file database';
     
 }
 
