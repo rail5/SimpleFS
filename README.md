@@ -58,6 +58,11 @@ Check for the line:
 file_uploads = On
 ```
 
+- It's also a good idea to check your **php.ini**'s *maximum upload size*:
+```
+upload_max_filesize = ?????M
+```
+
 # Screenshots
 ![Main](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-main.png)
 ![Sign in](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-login.png)
