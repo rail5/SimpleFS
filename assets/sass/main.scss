@@ -15,12 +15,12 @@
 // Breakpoints.
 
 	@include breakpoints((
-		xlarge:    (1281px,   1680px   ),
-		large:     (961px,    1280px   ),
-		medium:    (737px,    960px    ),
-		small:     (481px,    736px    ),
-		xsmall:    (361px,    480px    ),
-		xxsmall:   (null,     360px    )
+		xlarge:	(1281px,   1680px   ),
+		large:	 (961px,	1280px   ),
+		medium:	(737px,	960px	),
+		small:	 (481px,	736px	),
+		xsmall:	(361px,	480px	),
+		xxsmall:   (null,	 360px	)
 	));
 
 /* Icon (alt) */

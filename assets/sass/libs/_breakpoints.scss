@@ -216,7 +216,7 @@
 			}
 
 		// Output.
-	        @media #{$media} {
+			@media #{$media} {
 				@content;
 			}
 
