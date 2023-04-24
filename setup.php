@@ -10,6 +10,11 @@ if (ini_get('file_uploads') != 1) {
 	echo '<div align="center"><h1><font color="FF0000">Warning: Your PHP configuration has disabled file uploads</font><h1><h3>Please check your <b><u>php.ini</u></b> for the line:</h3><i>file_uploads = On</i></div><br><br>';
 }
 
+// Check for SQLite and PDO
+if (!extension_loaded("pdo_sqlite")) {
+    echo '<div align="center"><h1><font color="FF0000">Warning: You do not have the PHP SQLite extension installed.</font></h1><h3>Please install the PHP sqlite3 extension before moving forward</h3></div><br><br>'
+}
+
 echo '<div align="center"><b><u>php.ini</u></b> specifies your server\'s <i>maximum upload filesize</i> as:<b> '.ini_get('upload_max_filesize').'</b></div><br>';
 ?>
     <div align="center">
