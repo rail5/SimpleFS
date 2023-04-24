@@ -1,7 +1,6 @@
 <?php
 
 
-require('config.global.php');
 require('functions.global.php');
 require('layout.php');
 
@@ -18,13 +17,13 @@ if ($_POST['fsubmitted'] == "true") {
 	
 $target_dir = "files/";
 $target_file = $target_dir . basename($_FILES["upfile"]["name"]);
-$uploadOk = 1;
+$uploadOk = true;
 $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 
 if (file_exists($target_file)) {
   echo "<div align='center'><h1>Error: file already exists</h1></div>";
-  $uploadOk = 0;
+  $uploadOk = false;
 }
 
 /* *************************** */
@@ -42,23 +41,18 @@ if($fileType == "php" || $fileType == "htm" || $fileType == "html" || $fileType 
 /* End of the aforementioned alterable security section */
 /* **************************************************** */
 
-/* This following part shouldn't be deleted though, my apologies but without sanitizing these filenames, could break the whole thing */
-/* **** */
-if (strpos($target_file, "'") !== false) {
-	echo "<div align='center'><h1>Error: Cannot upload files with apostrophes or quote-marks</h1></div>";
-	$uploadOk = 0;
-}
+// TODO: Replace "sanitization" with prepared statements
 
-if (strpos($target_file, '"') !== false) {
-		echo "<div align='center'><h1>Error: Cannot upload files with apostrophes or quote-marks</h1></div>";
-	$uploadOk = 0;
+if (strpos($target_file, "'") !== false || strpos($target_file, '"') !== false) {
+	echo "<div align='center'><h1>Error: Cannot upload files with apostrophes or quote-marks</h1></div>";
+	$uploadOk = false;
 }
 
 /* Getting a list of all file IDs */
 
 $fileListId = contactDB("SELECT * FROM files;", 0);
 
-if ($uploadOk == 0) {
+if ($uploadOk == false) {
   echo "<div align='center'><h1>Error: file was not uploaded</h1></div>";
 } else {
   if (move_uploaded_file($_FILES["upfile"]["tmp_name"], $target_file)) {
@@ -70,9 +64,11 @@ if ($uploadOk == 0) {
 
 	
 	/* Write entry to DB */
+
+	$current_date = time();
 	
-	$publish = contactDB("INSERT INTO files (fileid, filepath, fileowner)
-	VALUES ($newFileId, '$target_file', '$currentUser');", 0);
+	$publish = contactDB("INSERT INTO files (fileid, filepath, fileowner, filedate)
+	VALUES ($newFileId, '$target_file', '$currentUser', $current_date);", 0);
 	
 	/* Tell the user all is well */
 	

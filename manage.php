@@ -1,6 +1,5 @@
 <?php
 
-require('config.global.php');
 require('layout.php');
 require('functions.global.php');
 
@@ -13,8 +12,13 @@ $currentUser = $_SESSION['simplefsuser'];
 
 /* Obtain list of current user's files */
 
-$myFilesId = contactDB("SELECT * FROM files WHERE fileowner='$currentUser';", 0);
-$myFilesName = contactDB("SELECT * FROM files where fileowner='$currentUser';", 1);
+if ($currentUser == "admin") {
+	$myFilesId = contactDB("SELECT * FROM files;", 0);
+	$myFilesName = contactDB("SELECT * FROM files;", 1);
+} else {
+	$myFilesId = contactDB("SELECT * FROM files WHERE fileowner='$currentUser';", 0);
+	$myFilesName = contactDB("SELECT * FROM files where fileowner='$currentUser';", 1);
+}
 
 $nFiles = count($myFilesId);
 
@@ -40,8 +44,13 @@ unset($myFilesId);
 unset($myFilesName); // Re-loading list after file deletion
 unset($nFiles);
 
-$myFilesId = contactDB("SELECT * FROM files WHERE fileowner='$currentUser';", 0);
-$myFilesName = contactDB("SELECT * FROM files where fileowner='$currentUser';", 1);
+if ($currentUser == "admin") {
+	$myFilesId = contactDB("SELECT * FROM files;", 0);
+	$myFilesName = contactDB("SELECT * FROM files;", 1);
+} else {
+	$myFilesId = contactDB("SELECT * FROM files WHERE fileowner='$currentUser';", 0);
+	$myFilesName = contactDB("SELECT * FROM files where fileowner='$currentUser';", 1);
+}
 $nFiles = count($myFilesId);
 
 if ($nFiles == 0) {

@@ -9,7 +9,6 @@ function contactDB($query, $column) {
 	// 1: fileid
 	// 2: filepath
 	// 3: fileowner
-	// 4: filedate
 	// ie, $result = contactDB("SELECT * FROM files WHERE fileowner='admin';", 2);
 	// populates the $result[] array with the file paths to every file owned by the admin user
 	

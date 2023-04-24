@@ -1,6 +1,5 @@
 <?php
 
-require('config.global.php');
 require('functions.global.php');
 require('layout.php');
 
@@ -29,7 +28,7 @@ if (!$realFile) {
 } else {
 	$fileName = str_replace("files/", "", $fetched[0]);
 	
-		if ($_GET['dl'] == "true") {
+	if ($_GET['dl'] == "true") {
 
 		header('Content-Type: application/octet-stream');
 		header("Content-Transfer-Encoding: Binary"); 

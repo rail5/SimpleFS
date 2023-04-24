@@ -1,32 +1,27 @@
 <?php
 
-require('config.global.php');
+require('functions.global.php');
 require('layout.php');
 
 if ($_POST['submitted'] == true) {
-	if ($_POST['username'] == $adminuser) {
-		if (password_verify($_POST['password'], $adminpass)) {
-			$_SESSION['simplefsvalid'] = true;
-			$_SESSION['simplefsuser'] = "admin";
-			// signed in, redirect
-			header('location: manage.php');
-		} else {
-			$_SESSION['simplefsvalid'] = false;
-			$_SESSION['simplefsuser'] = NULL;
-			die('Invalid username or password');
 
-		}
-	} else if ($_POST['username'] == $secuser) {
-		if (password_verify($_POST['password'], $secpass)) {
-			$_SESSION['simplefsvalid'] = true;
-			$_SESSION['simplefsuser'] = "guest";
-			// signed in, redirect
-			header('location: manage.php');
-		} else {
-			$_SESSION['simplefsvalid'] = false;
-			$_SESSION['simplefsuser'] = NULL;
-			die('Invalid username or password');
-		}
+	// Verify the username is legit
+	$valid_usernames = contactDB("SELECT user_name FROM users", 0);
+	$login_username = $_POST['username'];
+        if (!in_array($login_username, $valid_usernames)) {
+                die('Invalid username or password');
+        }
+
+        $relevant_password_hash = contactDB("SELECT user_password FROM users WHERE user_name='$login_username';", 0);
+	$relevant_password_hash = $relevant_password_hash[0];
+
+	$relevant_user_id = contactDB("SELECT user_id FROM users WHERE user_name='$login_username';", 0);
+	$relevant_user_id = $relevant_user_id[0];
+	
+	if (password_verify($_POST['password'], $relevant_password_hash)) {
+		$_SESSION['simplefsvalid'] = true;
+		$_SESSION['simplefsuser'] = (($relevant_user_id == 1) ? "admin" : "$login_username");
+		header('location: manage.php');
 	} else {
 		$_SESSION['simplefsvalid'] = false;
 		$_SESSION['simplefsuser'] = NULL;

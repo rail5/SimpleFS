@@ -1,5 +1,17 @@
 <?php
 
+/***
+ * index.php:
+ * Deliver main page
+ */
+
+ // Check if setup has been completed
+ // If the file 'setup.php' still exists, the user should be redirected to it
+ if (file_exists("./setup.php")) {
+	header('location: ./setup.php');
+	die();
+}
+
 require('layout.php');
 
 echo deliverTop("SimpleFS - Home");

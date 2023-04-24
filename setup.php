@@ -71,50 +71,53 @@ if ($_POST['formsubmitted'] == "true") {
 			die('Error: Usernames cannot be identical to each other');
 			exit();
 		}
-	}
-
-    // TODO: config.global.php should really just be a second SQL table
-	$myfile = fopen("config.global.php", "w") or die("Fatal error: can't open file. Does your webserver have write permissions here?");
-	
-	$admhash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-	if ($_POST['makeuser'] == true) {
-		$usrhash = password_hash($_POST['pass2'], PASSWORD_DEFAULT);
-	}
-	fwrite($myfile, "<?php".PHP_EOL);
-	fwrite($myfile, '$adminuser = \''.$_POST['username'].'\';'.PHP_EOL);
-	fwrite($myfile, '$adminpass = \''.$admhash.'\';'.PHP_EOL);
-
-	if ($_POST['makeuser'] == true) {
-	   fwrite($myfile, '$secuser = \''.$_POST['user2'].'\';'.PHP_EOL);
-	   fwrite($myfile, '$secpass = \''.$usrhash.'\';'.PHP_EOL);
-	}
-
-    fwrite($myfile, '$deleteafter = -1'.PHP_EOL);
-
-	if (!fwrite($myfile, "?>".PHP_EOL)) {
-		echo '<br><font color="FF0000">Error creating <b>config.global.php</b></font><br>Does the web server have write permissions here?';
-        die();
+		if ($_POST['user2'] == "admin") {
+			die('Error: Second username cannot be "admin"');
+			exit();
+		}
 	}
 	
-	echo '<br>User(s) created.';
-	
+
+	// Create the database
 	if (file_exists("./filedb.sqlite")) {
 		unlink("./filedb.sqlite");
 	}
-
 
 	touch("./filedb.sqlite");
 	$initializeDB = contactDB("CREATE TABLE files (
 		fileid int NOT NULL PRIMARY KEY,
 		filepath varchar(255) NOT NULL,
-		fileowner varchar(255) NOT NULL
+		fileowner varchar(255) NOT NULL,
+		filedate timestamp NOT NULL
+		);", 0);
+	
+	$add_config_table = contactDB("CREATE TABLE users (
+		user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+		user_name varchar(255) NOT NULL,
+		user_password varchar(255) NOT NULL,
+		auto_delete_files_after int NOT NULL
 		);", 0);
 				
-	echo '<br>Initialized file database';
+	echo '<br>Initialized SQLite database';
 
-    // Delete setup.php
-    unlink("./setup.php");
+	// Populate the 'users' table
+	$admin_password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+	$user_password_hash = password_hash($_POST['pass2'], PASSWORD_DEFAULT);
+
+	$add_user = contactDB("INSERT INTO users (user_name, user_password, auto_delete_files_after)
+		VALUES ('".$_POST['username']."', '$admin_password_hash', -1);", 0);
+
+	if ($_POST['makeuser']) {
+		$add_user = contactDB("INSERT INTO users (user_name, user_password, auto_delete_files_after)
+			VALUES ('".$_POST['user2']."', '$user_password_hash', -1);", 0);
+	}
 	
+	echo '<br>User(s) created.';
+
+	// Delete setup.php
+	unlink("./setup.php");
+	
+	header('location: index.php');
 }
 
 ?>
