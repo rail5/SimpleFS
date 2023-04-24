@@ -4,34 +4,34 @@ require('config.global.php');
 require('layout.php');
 
 if ($_POST['submitted'] == true) {
-    if ($_POST['username'] == $adminuser) {
-        if (password_verify($_POST['password'], $adminpass)) {
-            $_SESSION['simplefsvalid'] = true;
-            $_SESSION['simplefsuser'] = "admin";
-            // signed in, redirect
-            header('location: manage.php');
-        } else {
-            $_SESSION['simplefsvalid'] = false;
-            $_SESSION['simplefsuser'] = NULL;
-            die('Invalid username or password');
+	if ($_POST['username'] == $adminuser) {
+		if (password_verify($_POST['password'], $adminpass)) {
+			$_SESSION['simplefsvalid'] = true;
+			$_SESSION['simplefsuser'] = "admin";
+			// signed in, redirect
+			header('location: manage.php');
+		} else {
+			$_SESSION['simplefsvalid'] = false;
+			$_SESSION['simplefsuser'] = NULL;
+			die('Invalid username or password');
 
-        }
-    } else if ($_POST['username'] == $secuser) {
-        if (password_verify($_POST['password'], $secpass)) {
-            $_SESSION['simplefsvalid'] = true;
-            $_SESSION['simplefsuser'] = "guest";
-            // signed in, redirect
-            header('location: manage.php');
-        } else {
-            $_SESSION['simplefsvalid'] = false;
-            $_SESSION['simplefsuser'] = NULL;
-            die('Invalid username or password');
-        }
-    } else {
-        $_SESSION['simplefsvalid'] = false;
-        $_SESSION['simplefsuser'] = NULL;
-        die('Invalid username or password');
-    }
+		}
+	} else if ($_POST['username'] == $secuser) {
+		if (password_verify($_POST['password'], $secpass)) {
+			$_SESSION['simplefsvalid'] = true;
+			$_SESSION['simplefsuser'] = "guest";
+			// signed in, redirect
+			header('location: manage.php');
+		} else {
+			$_SESSION['simplefsvalid'] = false;
+			$_SESSION['simplefsuser'] = NULL;
+			die('Invalid username or password');
+		}
+	} else {
+		$_SESSION['simplefsvalid'] = false;
+		$_SESSION['simplefsuser'] = NULL;
+		die('Invalid username or password');
+	}
 }
 
 echo deliverTop("SimpleFS - Sign in");

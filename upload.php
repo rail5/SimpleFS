@@ -6,8 +6,8 @@ require('functions.global.php');
 require('layout.php');
 
 if ($_SESSION['simplefsvalid'] != true) {
-    header('location: login.php');
-    die();
+	header('location: login.php');
+	die();
 }
 
 $currentUser = $_SESSION['simplefsuser'];
@@ -15,7 +15,7 @@ $currentUser = $_SESSION['simplefsuser'];
 echo deliverTop("SimpleFS - Upload");
 
 if ($_POST['fsubmitted'] == "true") {
-    
+	
 $target_dir = "files/";
 $target_file = $target_dir . basename($_FILES["upfile"]["name"]);
 $uploadOk = 1;
@@ -45,13 +45,13 @@ if($fileType == "php" || $fileType == "htm" || $fileType == "html" || $fileType 
 /* This following part shouldn't be deleted though, my apologies but without sanitizing these filenames, could break the whole thing */
 /* **** */
 if (strpos($target_file, "'") !== false) {
-    echo "<div align='center'><h1>Error: Cannot upload files with apostrophes or quote-marks</h1></div>";
-    $uploadOk = 0;
+	echo "<div align='center'><h1>Error: Cannot upload files with apostrophes or quote-marks</h1></div>";
+	$uploadOk = 0;
 }
 
 if (strpos($target_file, '"') !== false) {
-        echo "<div align='center'><h1>Error: Cannot upload files with apostrophes or quote-marks</h1></div>";
-    $uploadOk = 0;
+		echo "<div align='center'><h1>Error: Cannot upload files with apostrophes or quote-marks</h1></div>";
+	$uploadOk = 0;
 }
 
 /* Getting a list of all file IDs */
@@ -62,26 +62,26 @@ if ($uploadOk == 0) {
   echo "<div align='center'><h1>Error: file was not uploaded</h1></div>";
 } else {
   if (move_uploaded_file($_FILES["upfile"]["tmp_name"], $target_file)) {
-    
-    $newFileId = rand(10000, 99999);
-    while (in_array($newFileId, $fileListId)) {
-        $newFileId = rand(10000, 99999);
-    }
+	
+	$newFileId = rand(10000, 99999);
+	while (in_array($newFileId, $fileListId)) {
+		$newFileId = rand(10000, 99999);
+	}
 
-    
-    /* Write entry to DB */
-    
-    $publish = contactDB("INSERT INTO files (fileid, filepath, fileowner)
-    VALUES ($newFileId, '$target_file', '$currentUser');", 0);
-    
-    /* Tell the user all is well */
-    
-    echo "<div align='center'><h1>The file ". htmlspecialchars( basename( $_FILES["upfile"]["name"])). " has been uploaded.</h1></div>";
+	
+	/* Write entry to DB */
+	
+	$publish = contactDB("INSERT INTO files (fileid, filepath, fileowner)
+	VALUES ($newFileId, '$target_file', '$currentUser');", 0);
+	
+	/* Tell the user all is well */
+	
+	echo "<div align='center'><h1>The file ". htmlspecialchars( basename( $_FILES["upfile"]["name"])). " has been uploaded.</h1></div>";
 
-    
-    
+	
+	
   } else {
-    echo "<div align='center'><h1>Error uploading file</h1></div>";
+	echo "<div align='center'><h1>Error uploading file</h1></div>";
   }
 }
 

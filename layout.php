@@ -8,7 +8,7 @@ session_start();
 
 function deliverTop($pagetitle) {
 
-    $top = '<!DOCTYPE HTML>
+	$top = '<!DOCTYPE HTML>
 <!--
 	Identity by HTML5 UP
 	html5up.net | @ajlkn
@@ -26,12 +26,12 @@ function deliverTop($pagetitle) {
 
 ';
 
-    return $top;
+	return $top;
 }
 
 function deliverMiddle($toptext, $bottomtext, $buttons) {
 
-    $middle = '<!-- Wrapper -->
+	$middle = '<!-- Wrapper -->
 			<div id="wrapper">
 
 				<!-- Main -->
@@ -55,8 +55,8 @@ function deliverMiddle($toptext, $bottomtext, $buttons) {
 }
 
 function deliverBottom() {
-    
-    $bottom = '<!-- Footer -->
+	
+	$bottom = '<!-- Footer -->
 					<footer id="footer">
 					</footer>
 
@@ -73,7 +73,7 @@ function deliverBottom() {
 	</body>
 </html>';
 
-    return $bottom;
+	return $bottom;
 }
 
 ?>

@@ -26,23 +26,23 @@ Simple, Self-Hosted, PHP File Sharing
 
 It's recommended that you alter your server configuration to block direct access to the sqlite database file (created by **setup.php** as **filedb.sqlite**), and to block direct access to the *files directory*, as such for example:
 ```
-    location = /SimpleFS/Installation/Folder/filedb.sqlite {
-        deny all;
-        return 404;
-    }
-    location = /SimpleFS/Installation/Folder/files/ {
-    deny all;
-    return 404;
-    }
+	location = /SimpleFS/Installation/Folder/filedb.sqlite {
+		deny all;
+		return 404;
+	}
+	location = /SimpleFS/Installation/Folder/files/ {
+	deny all;
+	return 404;
+	}
 ```
 - For Apache Users
 
 This repo includes .htaccess files preventing direct access to the sqlite database file and to the files directory. Please ensure that your Apache installation is configured to allow .htaccess overrides, as in for instance, in your **apache2.conf**:
 ```
 <Directory /var/www/>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
+		Options Indexes FollowSymLinks
+		AllowOverride All
+		Require all granted
 </Directory>
 ```
 
