@@ -20,7 +20,7 @@ if ($_POST['submitted'] == true) {
 	
 	if (password_verify($_POST['password'], $relevant_password_hash)) {
 		$_SESSION['simplefsvalid'] = true;
-		$_SESSION['simplefsuser'] = (($relevant_user_id == 1) ? "admin" : "$login_username");
+		$_SESSION['simplefsuser'] = ($relevant_user_id);
 		header('location: manage.php');
 	} else {
 		$_SESSION['simplefsvalid'] = false;

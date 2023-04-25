@@ -68,7 +68,7 @@ if ($uploadOk == false) {
 	$current_date = time();
 	
 	$publish = contactDB("INSERT INTO files (fileid, filepath, fileowner, filedate)
-	VALUES ($newFileId, '$target_file', '$currentUser', $current_date);", 0);
+	VALUES ($newFileId, '$target_file', $currentUser, $current_date);", 0);
 	
 	/* Tell the user all is well */
 	

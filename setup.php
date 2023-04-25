@@ -87,7 +87,7 @@ if ($_POST['formsubmitted'] == "true") {
 	$initializeDB = contactDB("CREATE TABLE files (
 		fileid int NOT NULL PRIMARY KEY,
 		filepath varchar(255) NOT NULL,
-		fileowner varchar(255) NOT NULL,
+		fileowner int NOT NULL,
 		filedate timestamp NOT NULL
 		);", 0);
 	
