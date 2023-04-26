@@ -4,14 +4,29 @@ Simple, Self-Hosted, PHP File Sharing
 # Features
 - Portable
 - Dual- or single-user set up *(users with permission to upload)*
-- SQLite
+- Option to automatically delete files after a certain length of time
+- SQLite (No need for a bulky SQL Server)
 
 ### Installation
 - Place files on your web server *(doesn't have to be in the root directory)*
 - Visit **setup.php** in your web browser to create a user or two to upload files (this script will also create & initialize the SQLite database)
-- Delete **setup.php** after setting up, as leaving it there is a security risk
 
 *That's it*
+
+# Requirements
+* [PHP 7.2+](https://www.php.net)
+* [SQLite Module for PHP](https://www.php.net/manual/en/sqlite3.installation.php)
+
+- Please ensure that your **php.ini** *permits uploads.*
+Check for the line:
+```
+file_uploads = On
+```
+
+- It's also a good idea to check your **php.ini**'s *maximum upload size*:
+```
+upload_max_filesize = ?????M
+```
 
 ### Usage
 
@@ -47,21 +62,6 @@ This repo includes .htaccess files preventing direct access to the sqlite databa
 ```
 
 These security measures *aren't absolutely essential*, as regardless, nobody can upload files without being signed in. However, the public-facing download links being in the form of **download.php?id=XXXXX** is considered to be a *security feature* as it helps to prevent **unintended recipients** from discovering and downloading files not meant for them. In this same vein, it's a good idea to disallow indiscriminate access to the FileDB and files directory.
-
-# Requirements
-* [PHP 7.2+](https://www.php.net)
-* [SQLite Module for PHP](https://www.php.net/manual/en/sqlite3.installation.php)
-
-- Please ensure that your **php.ini** *permits uploads.*
-Check for the line:
-```
-file_uploads = On
-```
-
-- It's also a good idea to check your **php.ini**'s *maximum upload size*:
-```
-upload_max_filesize = ?????M
-```
 
 # Screenshots
 ![Main](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-main.png)
