@@ -28,6 +28,13 @@ file_uploads = On
 upload_max_filesize = ?????M
 ```
 
+# Screenshots
+![Main](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-main.png)
+![Sign in](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-login.png)
+![Upload](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-upload.png)
+![Download](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-download.png)
+![Manage](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-manage.png)
+
 ### Usage
 
 - After signing in, upload files via **upload.php**
@@ -62,10 +69,3 @@ This repo includes .htaccess files preventing direct access to the sqlite databa
 ```
 
 These security measures *aren't absolutely essential*, as regardless, nobody can upload files without being signed in. However, the public-facing download links being in the form of **download.php?id=XXXXX** is considered to be a *security feature* as it helps to prevent **unintended recipients** from discovering and downloading files not meant for them. In this same vein, it's a good idea to disallow indiscriminate access to the FileDB and files directory.
-
-# Screenshots
-![Main](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-main.png)
-![Sign in](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-login.png)
-![Upload](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-upload.png)
-![Download](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-download.png)
-![Manage](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-manage.png)
