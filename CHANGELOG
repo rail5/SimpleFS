@@ -1,0 +1,9 @@
+TODO
+	* Replace "sanitization" with SQL Prepared Statements
+	* General code clean-up
+
+CHANGELOG
+
+2023-04-26:
+	* Updated the upload page to display the file's download link immediately after uploading
+	

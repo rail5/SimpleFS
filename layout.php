@@ -22,8 +22,10 @@ function deliverTop($pagetitle) {
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<style>
-			#settingsForm {
+			#settingsForm, #download-link {
 				display: flex !important;
+				align-items: center !important;
+				justify-content: center !important;
 			}
 		</style>
 	</head>
