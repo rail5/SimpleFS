@@ -1,4 +1,5 @@
 <?php
+require_once('simplefs-cron.php');
    session_start();
    unset($_SESSION["simplefsvalid"]);
    unset($_SESSION["simplefsuser"]);

@@ -7,8 +7,9 @@ function contactDB($query, $column) {
 	// $query: the SQLite query to the database
 	// $column: the column you're asking the DB to report back on
 	// 1: fileid
-	// 2: filepath
-	// 3: fileowner
+	// 2: filepath (link)
+	// 3: fileowner (user id)
+	// 4: filedate (uploaded date, unix timestamp)
 	// ie, $result = contactDB("SELECT * FROM files WHERE fileowner='admin';", 2);
 	// populates the $result[] array with the file paths to every file owned by the admin user
 	

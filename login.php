@@ -1,7 +1,8 @@
 <?php
 
-require('functions.global.php');
-require('layout.php');
+require_once('functions.global.php');
+require_once('layout.php');
+require_once('simplefs-cron.php');
 
 if ($_POST['submitted'] == true) {
 

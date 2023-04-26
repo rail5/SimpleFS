@@ -1,7 +1,8 @@
 <?php
 
-require('layout.php');
-require('functions.global.php');
+require_once('layout.php');
+require_once('functions.global.php');
+require_once('simplefs-cron.php');
 
 if ($_SESSION['simplefsvalid'] != true) {
 	header('location: login.php');
@@ -69,6 +70,10 @@ if ($_POST['settings-changed'] == true) {
 
 	$update_settings = contactDB("UPDATE users SET auto_delete_files_after=$final_auto_delete_length WHERE user_id=$currentUser", 0);
 	$noticeText = "<div align='center'><h1>Settings successfully changed</h1></div><br>".PHP_EOL;
+
+	if ($input_auto_delete_enabled && !is_numeric($input_auto_delete_length)) {
+		$notice = "<div align='center'><h1>Error: Non-numeric input for auto-deletion time</h1></div><br>".PHP_EOL;
+	}
 }
 
 $auto_delete_after_length = contactDB("SELECT auto_delete_files_after FROM users WHERE user_id=$currentUser;", 0);

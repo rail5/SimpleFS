@@ -117,7 +117,7 @@ if ($_POST['formsubmitted'] == "true") {
 	// Delete setup.php
 	unlink("./setup.php");
 	
-	header('location: index.php');
+	header('Refresh: 2; URL = index.php');
 }
 
 ?>

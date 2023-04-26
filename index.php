@@ -12,7 +12,9 @@
 	die();
 }
 
-require('layout.php');
+require_once('layout.php');
+require_once('simplefs-cron.php');
+
 
 echo deliverTop("SimpleFS - Home");
 
