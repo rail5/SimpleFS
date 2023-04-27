@@ -38,6 +38,8 @@ if (!$realFile) {
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header("Cache-Control: public");
+		header('Content-Type: application/octet-stream');
+		header("Content-Transfer-Encoding: Binary");
 		header("Content-disposition: attachment; filename=\"" .$fileName. "\""); 
 		header("Content-length: " . filesize($filename)); 
 		readfile($fetched[0]); 
