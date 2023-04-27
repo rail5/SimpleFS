@@ -17,7 +17,13 @@ if (!extension_loaded("pdo_sqlite")) {
 	echo '<div align="center"><h1><font color="FF0000">Warning: You do not have the PHP SQLite extension installed.</font></h1><h3>Please install the PHP sqlite3 extension before moving forward</h3></div><br><br>';
 }
 
+if (!extension_loaded("zip")) {
+	echo '<div align="center"><h1><font color="FF0000">Warning: You do not have the PHP ZIP extension installed.</font></h1><h3>Please install the PHP-zip extension before moving forward</h3></div><br><br>';
+}
+
 echo '<div align="center"><b><u>php.ini</u></b> specifies your server\'s <i>maximum upload filesize</i> as:<b> '.ini_get('upload_max_filesize').'</b></div><br>';
+
+echo '<div align="center"><b><u>php.ini</u></b> specifies that your server can permit uploads of up to <b> '.ini_get('max_file_uploads').' files</b>  in one request</div><br>';
 ?>
 	<div align="center">
 		<h1>IMPORTANT:</h1>

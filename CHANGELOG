@@ -6,4 +6,4 @@ CHANGELOG
 
 2023-04-26:
 	* Updated the upload page to display the file's download link immediately after uploading
-	
+	* SimpleFS now automatically creates a ZIP file when a user uploads multiple files (requires php-zip module)

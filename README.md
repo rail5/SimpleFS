@@ -5,6 +5,7 @@ Simple, Self-Hosted, PHP File Sharing
 - Portable
 - Dual- or single-user set up *(users with permission to upload)*
 - Option to automatically delete files after a certain length of time
+- Automatically ZIPs files if you upload more than one at a time
 - SQLite (No need for a bulky SQL Server)
 
 ### Installation
@@ -14,8 +15,9 @@ Simple, Self-Hosted, PHP File Sharing
 *That's it*
 
 # Requirements
-* [PHP 7.2+](https://www.php.net)
+* [PHP 7.4+](https://www.php.net)
 * [SQLite Module for PHP](https://www.php.net/manual/en/sqlite3.installation.php)
+* [ZIP Module for PHP](https://www.php.net/manual/en/zip.installation.php)
 
 - Please ensure that your **php.ini** *permits uploads.*
 Check for the line:

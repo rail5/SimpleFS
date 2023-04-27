@@ -17,7 +17,14 @@ echo deliverTop("SimpleFS - Upload");
 if ($_POST['fsubmitted'] == "true") {
 	
 	$target_dir = "files/";
-	$target_file = $target_dir . basename($_FILES["upfile"]["name"]);
+
+	// If the user is uploading multiple files, we'll ZIP them
+	if (count($_FILES["upfile"]["name"]) > 1) {
+		$target_file = $target_dir . "SimpleFS_User$currentUser " . date('Y-m-d H_i_s') . ".zip";
+	} else {
+		$target_file = $target_dir . basename($_FILES["upfile"]["name"][0]);
+	}
+
 	$uploadOk = true;
 	$fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -56,7 +63,22 @@ if ($_POST['fsubmitted'] == "true") {
 	if ($uploadOk == false) {
 		echo "<div align='center'><h1>Error: file was not uploaded</h1></div>";
 	} else {
-		if (move_uploaded_file($_FILES["upfile"]["tmp_name"], $target_file)) {
+
+		// If the user is uploading multiple files, we'll ZIP them
+		if (count($_FILES["upfile"]["name"]) > 1) {
+			$zip_archive = new ZipArchive;
+			$zip_archive->open($target_file, ZipArchive::CREATE);
+
+			foreach ($_FILES["upfile"]["tmp_name"] as $key=>$tmp_file_name) {
+				$zip_archive->addFile($tmp_file_name, "/".$_FILES["upfile"]["name"][$key]);
+			}
+
+			$file_upload_complete = $zip_archive->close();
+		} else {
+			$file_upload_complete = move_uploaded_file($_FILES["upfile"]["tmp_name"][0], $target_file);
+		}
+
+		if ($file_upload_complete) {
 			
 			$newFileId = rand(10000, 99999);
 			while (in_array($newFileId, $fileListId)) {
@@ -73,7 +95,7 @@ if ($_POST['fsubmitted'] == "true") {
 			
 			/* Tell the user all is well */
 			
-			echo "<div align='center'><h1>The file ". htmlspecialchars( basename( $_FILES["upfile"]["name"])). " has been uploaded.</h1></div>";
+			echo "<div align='center'><h1>Uploaded!</h1></div>";
 
 			/* Provide the download link */
 
@@ -103,7 +125,23 @@ window.onload = giveLink;
 
 }
 
-echo deliverMiddle("Upload", '<form action="upload.php" method="post" enctype="multipart/form-data"><input type="hidden" name="fsubmitted" id="fsubmitted" value="true"><input type="file" name="upfile" id="upfile">', '<button><i class="fa fa-upload">Upload</i></button></form>');
+echo '<script type="text/javascript">
+function checkLimit(files) {
+	if (files.length > '.ini_get('max_file_uploads').') {
+		alert("You may only upload up to '.ini_get('max_file_uploads').' files at once on this server\nFor administrators: this setting can be changed in your php.ini");
+
+		let list = new DataTransfer;
+
+		for (let i=0; i<'.ini_get('max_file_uploads').'; i++) {
+			list.items.add(files[i]);
+		}
+
+		document.getElementById("upfile").files = list.files;
+	}
+}
+</script>';
+
+echo deliverMiddle("Upload", '<form action="upload.php" method="post" enctype="multipart/form-data"><input type="hidden" name="fsubmitted" id="fsubmitted" value="true"><input type="file" name="upfile[]" id="upfile" onChange="checkLimit(this.files)" multiple>', '<button><i class="fa fa-upload">Upload</i></button></form>');
 
 echo deliverBottom();
 
