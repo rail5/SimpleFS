@@ -31,10 +31,17 @@ if (!$realFile) {
 	
 	if ($_GET['dl'] == "true") {
 
-		header('Content-Type: application/octet-stream');
-		header("Content-Transfer-Encoding: Binary"); 
+		ob_clean();
+		ob_end_flush();
+		header("Cache-Control: public");
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Cache-Control: public");
 		header("Content-disposition: attachment; filename=\"" .$fileName. "\""); 
+		header("Content-length: " . filesize($filename)); 
 		readfile($fetched[0]); 
+		exit(0);
 	} else {
 		echo deliverTop("SimpleFS - Download");
 		echo deliverMiddle("Download", $fileName, '<a href="download.php?id='.$_GET['id'].'&dl=true"><i class="fa fa-download fa-5x"></i></a>');

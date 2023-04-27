@@ -70,7 +70,7 @@ if ($_POST['fsubmitted'] == "true") {
 			$zip_archive->open($target_file, ZipArchive::CREATE);
 
 			foreach ($_FILES["upfile"]["tmp_name"] as $key=>$tmp_file_name) {
-				$zip_archive->addFile($tmp_file_name, "/".$_FILES["upfile"]["name"][$key]);
+				$zip_archive->addFile($tmp_file_name, basename($_FILES["upfile"]["name"][$key]));
 			}
 
 			$file_upload_complete = $zip_archive->close();
