@@ -122,7 +122,7 @@ if ($auto_delete_enabled) {
 	$settingsForm .= ' checked';
 }
 
-$settingsForm .= '> <label for="auto_delete_enabled">Auto-delete files after: </label><br>'.PHP_EOL;
+$settingsForm .= '> <label for="auto_delete_enabled">Delete my files after: </label><br>'.PHP_EOL;
 $settingsForm .= '<div id="settingsForm"> &nbsp; &nbsp; <input type="number" name="auto_delete_length" value="'.$preset_length.'" style="width: 20% !important;"> <i class="fa"> &nbsp; </i> <select name="auto_delete_unit" form="settings" style="width: 60% !important;">'.PHP_EOL;
 $settingsForm .= '<option value="minutes"'.set_preset_unit("minutes").'>Minutes</option>'.PHP_EOL;
 $settingsForm .= '<option value="hours"'.set_preset_unit("hours").'>Hours</option>'.PHP_EOL;
