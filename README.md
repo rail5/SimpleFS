@@ -2,15 +2,15 @@
 Simple, Self-Hosted, PHP File Sharing
 
 # Features
-- Portable
-- Dual- or single-user set up *(users with permission to upload)*
+- Portable & self-contained
 - Option to automatically delete files after a certain length of time
 - Automatically ZIPs files if you upload more than one at a time
 - SQLite (No need for a bulky SQL Server)
+- Dual- or single-user set up *(users with permission to upload)*
 
 ### Installation
-- Place files on your web server *(doesn't have to be in the root directory)*
-- Visit **setup.php** in your web browser to create a user or two to upload files (this script will also create & initialize the SQLite database)
+- Place SimpleFS **anywhere** on your web server
+- Visit **setup.php** in your web browser to create a user or two to upload files
 
 *That's it*
 
@@ -25,11 +25,6 @@ Check for the line:
 file_uploads = On
 ```
 
-- It's also a good idea to check your **php.ini**'s *maximum upload size*:
-```
-upload_max_filesize = ?????M
-```
-
 # Screenshots
 ![Main](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-main.png)
 ![Sign in](https://raw.githubusercontent.com/rail5/SimpleFS/main/screen-login.png)
@@ -41,9 +36,6 @@ upload_max_filesize = ?????M
 
 - After signing in, upload files via **upload.php**
 - After uploading, shareable links can be obtained from **manage.php** in the format **download.php?id=XXXXX**
-
-### User Recovery / Forgot Password
-- If you forget your password, download & re-run **setup.php**
 
 ### Security
 - For Nginx Users
