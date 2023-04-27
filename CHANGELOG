@@ -1,6 +1,7 @@
 TODO
 	* Replace "sanitization" with SQL Prepared Statements
 	* General code clean-up
+	* Re-work user creation & management. Setup.php should only create one (administrator) user. Other users should be created from a separate settings.php page or something similar.
 
 CHANGELOG
 
