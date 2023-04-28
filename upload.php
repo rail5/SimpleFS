@@ -99,24 +99,39 @@ if ($_POST['fsubmitted'] == "true") {
 
 			/* Provide the download link */
 
-			// We'll be using javascript to get the *absolute* link
+			$download_link = get_download_link($newFileId);
+
+			// Javascript is used for the "copy to clipboard" button
 			echo "<script type=\"text/javascript\">
-var downloadlink = window.location.href.slice(0, window.location.href.lastIndexOf('/')+1) + \"download.php?id=$newFileId\";
 
+function resetCopyButton() {
+	document.getElementById(\"copybutton\").innerHTML = \"<strong>Copy Link</strong>\";
+}
+			    
 function copyToClipboard() {
-	navigator.clipboard.writeText(downloadlink);
+	let downloadlink = \"$download_link\";
+	if (navigator.clipboard.writeText(downloadlink)) {
+		document.getElementById(\"copybutton\").innerHTML = \"<strong>Copied!</strong>\";
+		const resetButtonTimeout = setTimeout(resetCopyButton, 3000);
+	} else {
+		document.getElementById(\"copybutton\").innerHTML = \"<strong>Could not copy</strong>\";
+		const resetButtonTimeout = setTimeout(resetCopyButton, 3000);
+	}
 }
-
-function giveLink() {
-	
-	let linkHTML = \"<input type='text' value='\" + downloadlink + \"' style='width: 40% !important;' disabled><div style='font-size: 5px !important;'>&nbsp;</div><button onclick='copyToClipboard()' style='background-color: rgba(255,255,255,0.3) !important; font-size: 18px !important;'><strong>Copy Link</strong></button>\";
-	document.getElementById(\"download-link\").innerHTML = linkHTML;
-}
-
-window.onload = giveLink;
 </script>";
-			// Have a *relative* link accessible anyway in case the user has javascript disabled
-			echo "<div align='center' id='download-link' style='pointer-events: auto !important;'><a href='download.php?id=$newFileId'>Download Link</a></div>";
+			// Display the link
+			// If we're over SSL or on localhost, display a "copy to clipboard" button
+			//   (The browser navigator.clipboard API is only available over SSL or localhost)
+			//   (This is the answer to the GH bug report #7)
+			echo "<div align='center' id='download-link' style='pointer-events: auto !important;'><input type='text' value='$download_link' style='width: 40% !important; cursor: text !important;' disabled>";
+			
+			$javascript_can_copy_to_clipboard = (isSSL() || isLocalhost());
+
+			if ($javascript_can_copy_to_clipboard) {
+				echo "<div style='font-size: 5px !important;'>&nbsp;</div><button id='copybutton' onclick='copyToClipboard()' style='background-color: rgba(255,255,255,0.3) !important; font-size: 18px !important;'><strong>Copy Link</strong></button>";
+			}
+			
+			echo "</div>";
 			
 		} else {
 			echo "<div align='center'><h1>Error uploading file</h1></div>";

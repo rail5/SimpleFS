@@ -5,6 +5,12 @@ TODO
 
 CHANGELOG
 
+2023-04-27:
+	* upload.php now uses pure PHP rather than JavaScript to obtain the file download link
+	* The "copy-to-clipboard" button for download links now displays a message telling the user the link was copied
+	* The link display on upload.php now force-sets the cursor to "text" mode, to inform the user that the text can be selected
+	* The "copy-to-clipboard" button no longer displays if the server is not running either (1) via HTTPS or (2) on localhost. The reason for this is that the JavaScript navigator.clipboard API (which is necessary for the button to work) is only available if we're using HTTPS or we're on localhost.
+
 2023-04-26:
 	* Updated the upload page to display the file's download link immediately after uploading
 	* SimpleFS now automatically creates a ZIP file when a user uploads multiple files (requires php-zip module)
