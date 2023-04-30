@@ -47,7 +47,7 @@ if ($_POST['fsubmitted'] == "true") {
 	}
 	*/
 
-	/* End of the aforementioned  security section */
+	/* End of the aforementioned security section */
 	/* **************************************************** */
 
 	// TODO: Replace "sanitization" with prepared statements
