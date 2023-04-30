@@ -36,17 +36,18 @@ if ($_POST['fsubmitted'] == "true") {
 
 	/* *************************** */
 	/* Disallow risky file formats */
-	/* Delete or comment out this section if you don't care or otherwise protected the uploads folder from public access */
-	/* For anyone who's not sure why this is here, say for example somebody uploads a PHP file manager to your site. They've now pwned your server. So that's disallowed here */
-	/* It's not the biggest risk though, as sign-in is required, so if you're confident in your password strength, etc, this section can be deleted or commented out */
+	/* This section is commented out by default. If for some reason you can't protect direct access to the files/ directory, it may be a good idea to uncomment the following code */
+	/* However, SimpleFS comes with basic .htaccess files which should do the job for most users (assuming you're running Apache)
 	/* ************************** */
 
+	/*
 	if($fileType == "php" || $fileType == "htm" || $fileType == "html" || $fileType == "phtml" || $fileType == "asp" || $fileType == "aspx" || $fileType == "axd" || $fileType == "asx" || $fileType == "asmx" || $fileType == "ashx" || $fileType == "cfm" || $fileType == "xhtml" || $fileType == "jhtml" || $fileType == "pl" || $fileType == "php4" || $fileType == "php3" || $fileType == "php5" || $fileType == "php6" || $fileType == "php7" || $fileType == "rhtml" || $fileType == "shtml") {
-	die("Error: File type disallowed by security measure. Edit upload.php if you'd like to allow these types of files; the relevant security section is clearly marked");
+	die("Error: File type disallowed by security measure.");
 	$uploadOk = 0;
 	}
+	*/
 
-	/* End of the aforementioned alterable security section */
+	/* End of the aforementioned  security section */
 	/* **************************************************** */
 
 	// TODO: Replace "sanitization" with prepared statements
